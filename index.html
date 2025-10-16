@@ -9,8 +9,7 @@
   body {
     margin: 0;
     padding: 0;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
     background: radial-gradient(circle at top, #1a1a2e, #000);
     display: flex;
     justify-content: center;
@@ -19,10 +18,11 @@
     color: #fff;
     font-family: 'Poppins', sans-serif;
     text-align: center;
+    overflow-x: hidden;
   }
 
   h1 {
-    font-size: 3em;
+    font-size: clamp(2em, 6vw, 3.5em);
     margin: 0.2em;
     color: gold;
     text-shadow: 0 0 20px orange, 0 0 40px red;
@@ -35,18 +35,18 @@
   }
 
   p {
-    font-size: 1.5em;
+    font-size: clamp(1em, 4vw, 1.5em);
     color: #ffecb3;
     text-shadow: 0 0 10px gold;
-    margin-bottom: 40px;
+    margin: 20px;
   }
 
   .btn {
     background: linear-gradient(45deg, #ff9800, #ff5722);
     border: none;
-    padding: 15px 30px;
+    padding: 12px 25px;
     color: white;
-    font-size: 1.2em;
+    font-size: 1.1em;
     border-radius: 30px;
     cursor: pointer;
     box-shadow: 0 0 20px orange;
@@ -54,7 +54,7 @@
   }
 
   .btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
     box-shadow: 0 0 30px gold;
   }
 
@@ -62,8 +62,8 @@
   .diya {
     position: absolute;
     bottom: 10px;
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     background: url('https://cdn-icons-png.flaticon.com/512/3823/3823433.png') no-repeat center/contain;
     animation: float 5s ease-in-out infinite;
   }
@@ -73,12 +73,12 @@
     50% { transform: translateY(-15px); }
   }
 
-  /* Footer Text */
+  /* Footer */
   .footer {
     position: absolute;
-    bottom: 20px;
+    bottom: 10px;
     color: #ffd700;
-    font-size: 1.2em;
+    font-size: clamp(0.9em, 3vw, 1.2em);
     text-shadow: 0 0 10px gold, 0 0 20px orange;
     animation: footerGlow 3s ease-in-out infinite alternate;
   }
@@ -89,7 +89,7 @@
   }
 
   .made-by {
-    font-size: 1em;
+    font-size: clamp(0.8em, 2.5vw, 1em);
     color: #ffb347;
     margin-top: 5px;
     text-shadow: 0 0 10px orange;
@@ -116,14 +116,13 @@
   <div class="diya" style="left:80%; animation-delay: 2s;"></div>
 
   <div class="footer">
-    <div>❤️Bhagyoday Mens Parlour❤️</div>
+    <div>❤️ Bhagyoday Mens Parlour ❤️</div>
     <div class="made-by">Made by - Bhagyoday Jadhav</div>
   </div>
 
   <canvas id="fireworks"></canvas>
 
 <script>
-  // Fireworks animation
   const canvas = document.getElementById("fireworks");
   const ctx = canvas.getContext("2d");
   let w = canvas.width = window.innerWidth;
@@ -185,7 +184,6 @@
   }
   setInterval(createFirework, 700);
 
-  // Button click message
   function showBlessing() {
     const blessings = [
       "🌟 May your home be filled with light and happiness!",
@@ -198,7 +196,6 @@
     createFirework();
   }
 
-  // Resize canvas
   window.addEventListener("resize", () => {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
@@ -206,4 +203,3 @@
 </script>
 </body>
 </html>
-
