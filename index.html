@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✨ Happy Diwali ✨</title>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #1a1a2e, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 3em;
+    margin: 0.2em;
+    color: gold;
+    text-shadow: 0 0 20px orange, 0 0 40px red;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 10px gold, 0 0 20px orange; }
+    to { text-shadow: 0 0 30px red, 0 0 50px yellow; }
+  }
+
+  p {
+    font-size: 1.5em;
+    color: #ffecb3;
+    text-shadow: 0 0 10px gold;
+    margin-bottom: 40px;
+  }
+
+  .btn {
+    background: linear-gradient(45deg, #ff9800, #ff5722);
+    border: none;
+    padding: 15px 30px;
+    color: white;
+    font-size: 1.2em;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 0 20px orange;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px gold;
+  }
+
+  /* Diyas */
+  .diya {
+    position: absolute;
+    bottom: 10px;
+    width: 100px;
+    height: 100px;
+    background: url('https://cdn-icons-png.flaticon.com/512/3823/3823433.png') no-repeat center/contain;
+    animation: float 5s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  /* Footer Text */
+  .footer {
+    position: absolute;
+    bottom: 20px;
+    color: #ffd700;
+    font-size: 1.2em;
+    text-shadow: 0 0 10px gold, 0 0 20px orange;
+    animation: footerGlow 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes footerGlow {
+    from { text-shadow: 0 0 10px gold, 0 0 20px orange; }
+    to { text-shadow: 0 0 30px red, 0 0 50px yellow; }
+  }
+
+  .made-by {
+    font-size: 1em;
+    color: #ffb347;
+    margin-top: 5px;
+    text-shadow: 0 0 10px orange;
+  }
+
+  /* Fireworks */
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+</style>
+</head>
+
+<body>
+  <h1>🎆 Happy Diwali 🎆</h1>
+  <h1>Jadhav Family</h1>
+  <p>May this Diwali bring you endless joy, luck, and prosperity 💫</p>
+  <button class="btn" onclick="showBlessing()">✨ Get Your Good Luck ✨</button>
+
+  <div class="diya" style="left:10%; animation-delay: 0s;"></div>
+  <div class="diya" style="left:45%; animation-delay: 1s;"></div>
+  <div class="diya" style="left:80%; animation-delay: 2s;"></div>
+
+  <div class="footer">
+    <div>🌸 Jadhav Family 🌸</div>
+    <div class="made-by">Made by - Bhagyoday Jadhav</div>
+  </div>
+
+  <canvas id="fireworks"></canvas>
+
+<script>
+  // Fireworks animation
+  const canvas = document.getElementById("fireworks");
+  const ctx = canvas.getContext("2d");
+  let w = canvas.width = window.innerWidth;
+  let h = canvas.height = window.innerHeight;
+  const fireworks = [];
+
+  class Firework {
+    constructor(x, y, colors) {
+      this.x = x;
+      this.y = y;
+      this.colors = colors;
+      this.particles = [];
+      for (let i = 0; i < 100; i++) {
+        this.particles.push({
+          x: x,
+          y: y,
+          radius: Math.random() * 2,
+          color: this.colors[Math.floor(Math.random() * this.colors.length)],
+          speed: Math.random() * 5 + 1,
+          angle: Math.random() * 2 * Math.PI,
+          life: 100
+        });
+      }
+    }
+    update() {
+      this.particles.forEach(p => {
+        p.x += Math.cos(p.angle) * p.speed;
+        p.y += Math.sin(p.angle) * p.speed;
+        p.life -= 1;
+        p.speed *= 0.98;
+      });
+    }
+    draw() {
+      this.particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+    }
+  }
+
+  function loop() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+    ctx.fillRect(0, 0, w, h);
+    fireworks.forEach((f, i) => {
+      f.update();
+      f.draw();
+      f.particles = f.particles.filter(p => p.life > 0);
+      if (f.particles.length === 0) fireworks.splice(i, 1);
+    });
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  function createFirework() {
+    const colors = ["#ff0", "#f00", "#0ff", "#0f0", "#ff6600"];
+    fireworks.push(new Firework(Math.random() * w, Math.random() * h / 2, colors));
+  }
+  setInterval(createFirework, 700);
+
+  // Button click message
+  function showBlessing() {
+    const blessings = [
+      "🌟 May your home be filled with light and happiness!",
+      "💰 Prosperity and joy are on their way to you!",
+      "🔥 Let your dreams shine brighter than the diyas!",
+      "🎇 Wishing you health, peace, and success!",
+      "💫 The festival of lights brings you endless blessings!"
+    ];
+    alert(blessings[Math.floor(Math.random() * blessings.length)]);
+    createFirework();
+  }
+
+  // Resize canvas
+  window.addEventListener("resize", () => {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  });
+</script>
+</body>
+</html>
