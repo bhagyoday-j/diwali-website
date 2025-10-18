@@ -58,7 +58,6 @@
     box-shadow: 0 0 30px gold;
   }
 
-  /* Diyas */
   .diya {
     position: absolute;
     bottom: 10px;
@@ -73,7 +72,6 @@
     50% { transform: translateY(-15px); }
   }
 
-  /* Footer */
   .footer {
     position: absolute;
     bottom: 10px;
@@ -95,7 +93,6 @@
     text-shadow: 0 0 10px orange;
   }
 
-  /* Fireworks */
   canvas {
     position: absolute;
     top: 0;
@@ -107,7 +104,7 @@
 
 <body>
   <h1>🎆 Happy Diwali 🎆</h1>
-  <h1>Jadhav Family</h1>
+  <h1 id="family-name"></h1>
   <p>May this Diwali bring you endless joy, luck, and prosperity 💫</p>
   <button class="btn" onclick="showBlessing()">✨ Get Your Good Luck ✨</button>
 
@@ -116,13 +113,25 @@
   <div class="diya" style="left:80%; animation-delay: 2s;"></div>
 
   <div class="footer">
-    <div>❤️ Bhagyoday Mens Parlour ❤️</div>
+    <!-- <div>❤️ Bhagyoday Mens Parlour ❤️</div> -->
     <div class="made-by">Made by - Bhagyoday Jadhav</div>
   </div>
 
   <canvas id="fireworks"></canvas>
 
 <script>
+  // 🌟 Get name from URL (e.g. ?name=Patil Family)
+  const params = new URLSearchParams(window.location.search);
+  const nameFromURL = params.get("name");
+  const familyElement = document.getElementById("family-name");
+
+  if (nameFromURL) {
+    // Decode special characters like spaces (%20)
+    const decodedName = decodeURIComponent(nameFromURL);
+    familyElement.textContent = decodedName;
+  }
+
+  // 🎇 Fireworks animation logic
   const canvas = document.getElementById("fireworks");
   const ctx = canvas.getContext("2d");
   let w = canvas.width = window.innerWidth;
